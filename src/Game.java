@@ -18,13 +18,19 @@ public class Game {
     }
 
     public void PlayGame(Player[] players) {
+        int turnCount = 1;
         while (!IsFinished) {
+            System.out.println("--------------------------------------------");
+            System.out.println("                  turn " + turnCount);
+            System.out.println("--------------------------------------------");
             for (int i = 0; i < playerNumber; i++) {
                 if (!IsFinished) {
                     MovePlayer(players[(i + startPos) % playerNumber]);
+                    System.out.println();
                 }
                 else break;
             }
+            turnCount++;
         }
     }
 
@@ -33,7 +39,9 @@ public class Game {
     }
 
     public void MovePlayer(Player player) {
-        player.Position += Dice();
+        int dice = Dice();
+        player.Position += dice;
+        System.out.println(player.Name + " rolled a dice and got " + dice);
         if (player.Position > 100)
             player.Position = 100;
 
@@ -55,6 +63,8 @@ public class Game {
 
     public void FinishGame(Player winner) {
         IsFinished = true;
+        System.out.println();
+        System.out.println("--------------------------------------------");
         System.out.println(winner.Name + " won the game!");
     }
 }
