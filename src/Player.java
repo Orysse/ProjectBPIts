@@ -9,6 +9,6 @@ public class Player {
 
     public Player(){
         Position = -1;
-        this.Name = "";
+        this.Name = null;
     }
 }

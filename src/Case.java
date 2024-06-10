@@ -6,8 +6,4 @@ public class Case {
         this.SendTo = SendTo;
         this.Position = Position;
     }
-
-    public int getSendTo() {
-        return SendTo;
-    }
 }

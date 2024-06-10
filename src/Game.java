@@ -3,17 +3,18 @@ import java.util.Random;
 
 public class Game {
     public boolean IsFinished = false;
-    private Random _r = new Random();
+    private Random r;
     Grid grid;
     int playerNumber;
     int startPos;
 
-    public Game(int n, int start) {
+    public Game(int n, int start, Random random) {
         grid = new Grid();
         grid.FillGrid();
         if (n > 6) throw new InvalidParameterException("Players must be less than 6");
         playerNumber = n;
         startPos = start;
+        r = random;
     }
 
     public void PlayGame(Player[] players) {
@@ -28,7 +29,7 @@ public class Game {
     }
 
     public int Dice() {
-        return _r.nextInt(6) + 1;
+        return r.nextInt(6) + 1;
     }
 
     public void MovePlayer(Player player) {

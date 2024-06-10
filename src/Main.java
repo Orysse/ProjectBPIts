@@ -1,5 +1,6 @@
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Random;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -38,26 +39,41 @@ public class Main {
                 case 5: System.out.println("Please enter the sixth player name."); break;
             }
 
-            players[i].Name = sc.next();
-            players[i].Position = 1;
+            do {
+                String name = sc.next();
+                if (!Objects.equals(name, "Random") && !name.isEmpty()) {
+                    players[i].Name = name;
+                    players[i].Position = 1;
+                }
+                else
+                    System.out.println("Please enter a name that is different from \"Random\".");
+            } while (players[i].Position == -1);
         }
 
-        System.out.println("Who will be the first to play?");
+        System.out.println("Who will be the first to play?\nYou can enter the name of the player or \"Random\" to randomize the player who start.");
         int startPosition = -1;
+        Random r = new Random();
         do {
             String first = sc.next();
-            for (int i = 0; i < n; i++) {
-                if (Objects.equals(first, players[i].Name)){
-                    startPosition = i;
+            if (first.equals("Random")) {
+                startPosition = r.nextInt(n);
+            }
+            else {
+                for (int i = 0; i < n; i++) {
+                    if (Objects.equals(first, players[i].Name)) {
+                        startPosition = i;
+                    }
                 }
             }
             if (startPosition == -1){
-                System.out.println("Please enter one of the name you gave above.");
+                System.out.println("Please enter one of the name you gave above or \"Random\".");
             }
         } while (startPosition == -1);
 
+        System.out.println("Ok, " + players[startPosition].Name + " will be the one starting.");
 
-        Game game = new Game(n, startPosition);
+
+        Game game = new Game(n, startPosition, r);
         game.PlayGame(players);
     }
 }
