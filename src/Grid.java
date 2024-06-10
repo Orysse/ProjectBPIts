@@ -9,7 +9,7 @@ public class Grid {
 
     public void FillGrid() {
         for (int i = 0; i < Size; i++) {
-            switch (i) {
+            switch (i + 1) {
                 case 2: TheGrid[i] = new Case(23,i); break;
                 case 8: TheGrid[i] = new Case(34,i); break;
                 case 20: TheGrid[i] = new Case(77,i); break;
@@ -24,7 +24,7 @@ public class Grid {
                 case 86: TheGrid[i] = new Case(54,i); break;
                 case 93: TheGrid[i] = new Case(70,i); break;
                 case 97: TheGrid[i] = new Case(25,i); break;
-                default: TheGrid[i] = new Case(i,i);
+                default: TheGrid[i] = new Case(i + 1,i + 1);
             }
         }
     }
