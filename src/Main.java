@@ -76,7 +76,7 @@ public class Main {
         System.out.println("Ok, " + players[startPosition].Name + " will be the one starting.");
         System.out.println();
 
-        Game game = new Game(n, startPosition, r);
-        game.PlayGame(players);
+        Game game = new Game(n, startPosition,players, r, sc);
+        game.PlayGame();
     }
 }
