@@ -94,7 +94,7 @@ public class Game {
             else System.out.println("Sorry, the answer was " + (a+b));
         }
         if (next.Special == 2){
-            System.out.println("Too bad, this is the number you must not step on... " + player.Name + " wont be able to play next turn.");
+            System.out.println("Too bad, this is one of the numbers you must not step on... " + player.Name + " wont be able to play next turn.");
             player.Canplay += 1;
         }
         if (next.Special == 3){

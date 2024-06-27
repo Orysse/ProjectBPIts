@@ -34,11 +34,16 @@ public class Grid {
             }
         }
         int n;
-        do {
-            n = rd.nextInt(100);
-        } while (TheGrid[n].SendTo != TheGrid[n].Position && TheGrid[n].Special != 0);
-        TheGrid[n].Special = 2;
-        System.out.println("\nThe number " + (n+1) + " is the forbidden number, make sure not to step on it.\n");
+        for (int i = 0; i < 3; i++) {
+            do {
+                n = rd.nextInt(100);
+            } while (TheGrid[n].SendTo != TheGrid[n].Position && TheGrid[n].Special != 0);
+            TheGrid[n].Special = 2;
+            System.out.print((n+1));
+            if (i < 1) System.out.print(", ");
+            if (i < 2) System.out.print("and ");
+        }
+        System.out.println(" are forbidden numbers, make sure not to step on it.\n");
         System.out.print("Case number ");
         for (int i = 0; i < 3; i++) {
             do {
@@ -46,7 +51,8 @@ public class Grid {
             } while (TheGrid[n].SendTo != TheGrid[n].Position && TheGrid[n].Special != 0);
             TheGrid[n].Special = 3;
             System.out.print((n+1));
-            if (i < 2) System.out.print(", ");
+            if (i < 1) System.out.print(", ");
+            if (i < 2) System.out.print("and ");
         }
         System.out.println(" are target cases.\n");
 
@@ -69,7 +75,7 @@ public class Grid {
             System.out.println("|");
         }
         System.out.println("-----------------------");
-        System.out.println("Legend :\nO => Normal case\nH => Ladder\nS => Snake\n? => Question case\nX => Forbidden case\nF => FUCK YOU case\n");
+        System.out.println("Legend :\nO => Normal case\nH => Ladder\nS => Snake\n? => Question case\nX => Forbidden case\nF => Target case\n");
     }
 
     public void printGridSymbol(Case c) {
