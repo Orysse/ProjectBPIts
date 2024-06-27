@@ -111,9 +111,6 @@ public class Game {
                 System.out.println("Sorry " + players[i].Name + ", you have been targeted by " + player.Name + ".");
             }
         }
-        /*if (player.Position >= 100) {
-            FinishGame(player);
-        }*/
     }
 
     public void FinishGame(Player winner, int count) {
