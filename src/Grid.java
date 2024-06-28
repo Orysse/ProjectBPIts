@@ -40,8 +40,7 @@ public class Grid {
             } while (TheGrid[n].SendTo != TheGrid[n].Position && TheGrid[n].Special != 0);
             TheGrid[n].Special = 2;
             System.out.print((n+1));
-            if (i < 1) System.out.print(", ");
-            if (i < 2) System.out.print("and ");
+            if (i < 2) System.out.print(", ");
         }
         System.out.println(" are forbidden numbers, make sure not to step on it.\n");
         System.out.print("Case number ");
@@ -51,8 +50,7 @@ public class Grid {
             } while (TheGrid[n].SendTo != TheGrid[n].Position && TheGrid[n].Special != 0);
             TheGrid[n].Special = 3;
             System.out.print((n+1));
-            if (i < 1) System.out.print(", ");
-            if (i < 2) System.out.print("and ");
+            if (i < 2) System.out.print(", ");
         }
         System.out.println(" are target cases.\n");
 
@@ -78,7 +76,7 @@ public class Grid {
         System.out.println("Legend :\nO => Normal case\nH => Ladder\nS => Snake\n? => Question case\nX => Forbidden case\nF => Target case\n");
     }
 
-    public void printGridSymbol(Case c) {
+    private void printGridSymbol(Case c) {
         if (c.Special == 3) {
             System.out.print("F ");
         }

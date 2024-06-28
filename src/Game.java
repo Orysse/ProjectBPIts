@@ -1,4 +1,3 @@
-import java.security.InvalidParameterException;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,17 +11,111 @@ public class Game {
     Scanner sc;
     Player[] players;
 
-    public Game(int n, int start,Player[] p, Random random, Scanner scanner) {
-        grid = new Grid(random);
+    public Game() {
+        // print a text to welcome the players
+        System.out.println();
+        System.out.println("Hello, let's play a game of snakes and ladders!");
+
+        r = new Random(startPos);
+        sc = new Scanner(System.in);
+
+        playerNumber = getPlayerNumber();
+        players = instantiatePlayers();
+        getPlayerNames();
+        startPos = getPlayerOrder();
+
+        grid = new Grid(r);
         grid.FillGrid();
         System.out.println("This is the grid you will be playing on :");
         grid.PrintGrid();
-        if (n > 6) throw new InvalidParameterException("Players must be less than 6");
-        playerNumber = n;
-        startPos = start;
-        players = p;
-        r = random;
-        sc = scanner;
+    }
+
+    private int getPlayerNumber() {// ask for the number of player
+        System.out.println("How many players will be playing the game?");
+        int n;
+        do { // this do-while ensure that the answer is a valid number
+            String s = sc.next();
+            try { // this try catch make sure it is an integer
+                n = Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                    n = 0;
+            }
+            if (n > 6 || n < 1) { // this is a part that ensure the integer is in the correct range
+                System.out.println("Please enter a number between 1 and 6");
+            }
+        }
+        while (n > 6 || n < 1); // as long as the answer isn't a correct value the question will be asked
+        // again and the user will be able to provide a new answer.
+        System.out.println();
+        return n;
+    }
+
+    private Player[] instantiatePlayers() {
+        // as the player class is pretty light, we create the max amount of player beforehand to avoid
+        // having to create a bunch of variables when getting different amount of player.
+        Player player1 = new Player();
+        Player player2 = new Player();
+        Player player3 = new Player();
+        Player player4 = new Player();
+        Player player5 = new Player();
+        Player player6 = new Player();
+
+        // we then put all the players into an array and return it
+        return new Player[]{player1, player2, player3, player4, player5, player6};
+    }
+
+    private void getPlayerNames() {
+        // here we ask for all the players names.
+        for (int i = 0; i < playerNumber; i++) { // we loop through the first n player instantiated with n being
+            switch (i) {              // the number of player the user ask for
+                case 0: System.out.println("Please enter the first player name."); break;
+                case 1: System.out.println("Please enter the second player name."); break;
+                case 2: System.out.println("Please enter the third player name."); break;
+                case 3: System.out.println("Please enter the fourth player name."); break;
+                case 4: System.out.println("Please enter the fifth player name."); break;
+                case 5: System.out.println("Please enter the sixth player name."); break;
+            }// the switch statement is only here for verbose purposes and having better questions
+
+            do { // again here we have a do-while ensuring the name of the player won't be "Random"
+                String name = sc.next(); // as it would be in conflict with another function later
+                if (!Objects.equals(name, "random") && !name.isEmpty()) {
+                    players[i].Name = name; // when the player is given a name, it gets is position
+                    players[i].Position = 1;// meaning he can play. if the position is = to -1 the game
+                }                           // will throw an error if this object is moved.
+                else
+                    System.out.println("Please enter a name that is different from \"random\".");
+            } while (players[i].Position == -1);
+        }
+        System.out.println();
+    }
+
+    private int getPlayerOrder() {
+        //asking the player who will be the first to play
+        System.out.println("Who will be the first to play?\nYou can enter the name of the player or \"random\" to randomize the player who start.");
+        int startPosition = -1;
+        Random r = new Random();// creating a new random that will be passed as a parameter to other
+        do {                    // classes.
+            String first = sc.next();
+            if (first.equals("random")) { // check if the input is "random" and assign a random start
+                startPosition = r.nextInt(playerNumber); // number, this number is the position of the player
+            }                                 // that start in the array
+            else {
+                for (int i = 0; i < playerNumber; i++) {
+                    if (Objects.equals(first, players[i].Name)) {
+                        startPosition = i;
+                    } // if a name is given we loop through the player array to find a player with
+                }     // that name.
+            }
+            if (startPosition == -1){ // if the given input is incorrect, the do-while will repeat the question.
+                System.out.println("Please enter one of the name you gave above or \"random\".");
+            }
+        } while (startPosition == -1);
+
+        // prompt a message to tell who will be starting
+        System.out.println("Ok, " + players[startPosition].Name + " will be the one starting.");
+        System.out.println();
+
+        return startPosition;
     }
 
     public void PlayGame() {
@@ -60,11 +153,11 @@ public class Game {
         }
     }
 
-    public int Dice() {
+    private int Dice() {
         return r.nextInt(6) + 1;
     }
 
-    public void MovePlayer(Player player, Player[] players) {
+    private void MovePlayer(Player player, Player[] players) {
         int dice = Dice();
         player.Position += dice;
         System.out.println(player.Name + " rolled a dice and got " + dice);
@@ -113,7 +206,7 @@ public class Game {
         }
     }
 
-    public void FinishGame(Player winner, int count) {
+    private void FinishGame(Player winner, int count) {
         IsFinished = true;
         System.out.println();
         System.out.println("--------------------------------------------");

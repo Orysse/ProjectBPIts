@@ -5,7 +5,7 @@ public class Player {
 
     public Player(){
         Position = -1;
-        this.Name = null;
+        Name = null;
         Canplay = 0;
     }
 }
